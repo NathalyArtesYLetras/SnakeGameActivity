@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SnakeGameOne.entities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -62,7 +63,47 @@ namespace SnakeGameOne
             ConsoleKeyInfo input;
             while (!Console.KeyAvailable)
             {
-                Move();
+                if (direction == 0)
+                {
+                    //up
+                    if (grid[currentCell.y - 1, currentCell.x].val == "*")
+                    {
+                        Lose();
+                        return;
+                    }
+                    visitCell(grid[currentCell.y - 1, currentCell.x]);
+                }
+                else if (direction == 1)
+                {
+                    //right
+                    if (grid[currentCell.y, currentCell.x - 1].val == "*")
+                    {
+                        Lose();
+                        return;
+                    }
+                    visitCell(grid[currentCell.y, currentCell.x - 1]);
+                }
+                else if (direction == 2)
+                {
+                    //down
+                    if (grid[currentCell.y + 1, currentCell.x].val == "*")
+                    {
+                        Lose();
+                        return;
+                    }
+                    visitCell(grid[currentCell.y + 1, currentCell.x]);
+                }
+                else if (direction == 3)
+                {
+                    //left
+                    if (grid[currentCell.y, currentCell.x + 1].val == "*")
+                    {
+                        Lose();
+                        return;
+                    }
+                    visitCell(grid[currentCell.y, currentCell.x + 1]);
+                }
+                Thread.Sleep(speed * 100); ;
                 updateScreen();
             }
             input = Console.ReadKey();
@@ -94,16 +135,28 @@ namespace SnakeGameOne
             switch (inp)
             {
                 case 'w':
-                    goUp();
+                    ///goUp();
+                    if (direction == 2)
+                        return;
+                    direction = 0;
                     break;
                 case 's':
-                    goDown();
-                    break;
-                case 'a':
-                    goRight();
+                    //goDown();
+                    if (direction == 0)
+                        return;
+                    direction = 2;
                     break;
                 case 'd':
-                    goLeft();
+                    //goLeft();
+                    if (direction == 1)
+                        return;
+                    direction = 3;
+                    break;
+                case 'a':
+                    //goRight();
+                    if (direction == 3)
+                        return;
+                    direction = 1;
                     break;
             }
         }
@@ -127,7 +180,7 @@ namespace SnakeGameOne
             addFood();
         }
 
-        static void goUp()
+        /*static void goUp()
         {
             if (direction == 2)
                 return;
@@ -146,7 +199,7 @@ namespace SnakeGameOne
             if (direction == 0)
                 return;
             direction = 2;
-        }
+        }*/
 
         static void goLeft()
         {
@@ -155,7 +208,7 @@ namespace SnakeGameOne
             direction = 3;
         }
 
-        static void Move()
+        /*static void Move()
         {
             if (direction == 0)
             {
@@ -198,7 +251,7 @@ namespace SnakeGameOne
                 visitCell(grid[currentCell.y, currentCell.x + 1]);
             }
             Thread.Sleep(speed * 100);
-        }
+        }*/
 
         static void visitCell(Cell cell)
         {
@@ -272,53 +325,6 @@ namespace SnakeGameOne
             }
             Console.WriteLine(toPrint);
         }
-        public class Cell
-        {
-            public string val
-            {
-                get;
-                set;
-            }
-            public int x
-            {
-                get;
-                set;
-            }
-            public int y
-            {
-                get;
-                set;
-            }
-            public bool visited
-            {
-                get;
-                set;
-            }
-            public int decay
-            {
-                get;
-                set;
-            }
-
-            public void decaySnake()
-            {
-                decay -= 1;
-                if (decay == 0)
-                {
-                    visited = false;
-                    val = " ";
-                }
-            }
-
-            public void Clear()
-            {
-                val = " ";
-            }
-
-            public void Set(string newVal)
-            {
-                val = newVal;
-            }
-        }
+        
     }
 }
