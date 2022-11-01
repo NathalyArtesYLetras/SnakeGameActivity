@@ -274,51 +274,27 @@ namespace SnakeGameOne
         }
         public class Cell
         {
-            public string val
+            internal string val;
+            internal bool visited;
+            internal int decay;
+            internal int x;
+            internal int y;
+
+            internal void Clear()
             {
-                get;
-                set;
-            }
-            public int x
-            {
-                get;
-                set;
-            }
-            public int y
-            {
-                get;
-                set;
-            }
-            public bool visited
-            {
-                get;
-                set;
-            }
-            public int decay
-            {
-                get;
-                set;
+                throw new NotImplementedException();
             }
 
-            public void decaySnake()
+            internal void decaySnake()
             {
-                decay -= 1;
-                if (decay == 0)
-                {
-                    visited = false;
-                    val = " ";
-                }
+                throw new NotImplementedException();
             }
 
-            public void Clear()
+            internal void Set(string v)
             {
-                val = " ";
-            }
-
-            public void Set(string newVal)
-            {
-                val = newVal;
+                throw new NotImplementedException();
             }
         }
     }
 }
+        
